@@ -1,5 +1,6 @@
 # userscripts
 Userscripts on my firefox.
 
-Resume refresher:
-    Automatic refresh resume on <a href="www.zhaopin.com">智联招聘</a> and <a href="www.liepin.com">猎聘网</a>.
+Contents
+--------
+ * Resume refresher -- `Automatic refresh resume` on [智联招聘](http://www.zhaopin.com) and [猎聘网](http://www.liepin.com).
