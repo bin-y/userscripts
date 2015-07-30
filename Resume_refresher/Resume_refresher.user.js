@@ -11,8 +11,14 @@ window.alert = console.log;
 
 document.RefreshFuncTable = {
     'c.liepin.com': function () {
-        document.querySelector('a[data-selector="resume-refresh"]').click();
-        setTimeout('document.querySelector(\'.aui-btn-primary\').click();', 1000);
+        $.real_dialog = $.dialog;
+        $.fake_dialog = function(a, b, c) {
+            if(a.title == '刷新成功！')
+                return console.log(a);
+            return $.real_dialog(a, b, c);
+        };
+        $.dialog = $.fake_dialog;
+        document.querySelector('[data-selector="resume-refresh"]').click();
     },
     'i.zhaopin.com': function () {
         document.querySelector('.ico_refresh a').click();
