@@ -11,13 +11,15 @@ window.alert = console.log;
 
 document.RefreshFuncTable = {
     'c.liepin.com': function () {
-        $.real_dialog = $.dialog;
-        $.fake_dialog = function(a, b, c) {
-            if(a.title == '刷新成功！')
-                return console.log(a);
-            return $.real_dialog(a, b, c);
-        };
-        $.dialog = $.fake_dialog;
+            if($.fake_dialog == undefined) {
+                $.real_dialog = $.dialog;
+                $.fake_dialog = function(a, b, c) {
+                    if(a.title == '刷新成功！')
+                        return console.log(a);
+                    return $.real_dialog(a, b, c);
+            };
+            $.dialog = $.fake_dialog;
+        }
         document.querySelector('[data-selector="resume-refresh"]').click();
     },
     'i.zhaopin.com': function () {
