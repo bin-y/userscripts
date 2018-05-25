@@ -1,35 +1,30 @@
 // ==UserScript==
 // @name        Resume refresher
 // @namespace   https://github.com/Bin-Y
-// @include     http://c.liepin.com/resume/getdefaultresume/
-// @include     http://i.zhaopin.com/
+// @include     https://c.liepin.com/resume/regresume/*
+// @include     https://i.zhaopin.com/
 // @version     1
 // @grant       none
 // ==/UserScript==
 
-window.alert = console.log;
+'use strict';
 
-document.RefreshFuncTable = {
-    'c.liepin.com': function () {
-            if($.fake_dialog == undefined) {
-                $.real_dialog = $.dialog;
-                $.fake_dialog = function(a, b, c) {
-                    if(a.title == '刷新成功！')
-                        return console.log(a);
-                    return $.real_dialog(a, b, c);
-            };
-            $.dialog = $.fake_dialog;
+(function () {
+    unsafeWindow.alert = console.log;
+
+    const domain_refresher_table = {
+        'c.liepin.com': function () {
+            document.querySelector('[data-selector="resume-refresh"]').click();
+        },
+        'i.zhaopin.com': function () {
+            document.querySelector('.linkRefresh').click();
+            setTimeout(function () { unsafeWindow.$(".dialog,.full_bg").remove(); }, 500);
         }
-        document.querySelector('[data-selector="resume-refresh"]').click();
-    },
-    'i.zhaopin.com': function () {
-        document.querySelector('.ico_refresh a').click();
-    }
-};
+    };
+    function refresh_resume() {
+        domain_refresher_table[document.domain]();
+        setTimeout(refresh_resume, 5 * 60 * 1000);
+    };
+    setTimeout(refresh_resume, 5 * 1000);
+})();
 
-document.RefreshResume = function () {
-    document.RefreshFuncTable[document.domain]();
-    setTimeout(document.RefreshResume, 5 * 60 * 1000);
-};
-
-setTimeout(document.RefreshResume, 5 * 1000);
